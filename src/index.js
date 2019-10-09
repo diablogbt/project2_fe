@@ -9,23 +9,25 @@ import './index.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import 'bootstrap';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import authReducer from './store/reducers/auth';
 import userReducer from './store/reducers/user'; 
+import filterReducer from './store/reducers/filter';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    user: userReducer
+    user: userReducer,
+    filter: filterReducer
     }, composeEnhancers(applyMiddleware(thunk)));
 
 const store = createStore(rootReducer);
 
 const app = (
-    
     <Provider store={store}>
         <BrowserRouter>
             <App />

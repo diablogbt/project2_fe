@@ -18,20 +18,25 @@ export const getAllUsers = ()=>{
 }
 
 export const getUserInfo = () => {
-    let token = localStorage.getItem('token');
-    let userId = localStorage.getItem('userId');
+    return dispatch =>{
+        let token = localStorage.getItem('token');
+        let userId = localStorage.getItem('userId');
 
-    let url = 'http://localhost:8080/user/getUserById?' + 'userId=' + userId;
-    let config = {
-        headers: {
-            Authorization: 'Bearer '+token,
+        let url = 'http://localhost:8080/user/getUserById?' + 'userId=' + userId;
+        let config = {
+            headers: {
+                Authorization: 'Bearer '+token,
+            }
         }
+        axios.get(url,config).then(
+            response => {
+                dispatch({
+                    type: 'user_set_info',
+                    userInfo: response.data
+                });
+            }
+        ).catch(
+            err => console.log(err)
+        );
     }
-    axios.get(url,config).then(
-        response => {
-            console.log(response.data);
-        }
-    ).catch(
-        err => console.log(err)
-    );
 }

@@ -2,16 +2,17 @@ import {updateObject} from '../utility';
 import * as actions from '../actions/Index';
 
 const initialState = {
-    userInfo: null
+    userInfo: {avatarlocation: 'avatar_def.png'}
 };
 
-
+const setUserInfo = (state,action) => {
+    return updateObject(state, {userInfo: action.userInfo});
+}
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-        case 'user_get_info': 
-            actions.getUserInfo();
-            return state;
+        case 'user_set_info': 
+            return setUserInfo(state,action);
         default:  
             return state;
     }

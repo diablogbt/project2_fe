@@ -1,0 +1,52 @@
+.SideBarPanel{
+    background-color: darkgrey;
+    width: 275px;
+}
+
+.myAccordionContent{
+    font-size: 12px
+}
+.myAccordionHeader{
+    font-size: 12px
+}
+
+.mySliderTitles{
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 4px;
+    vertical-align: center;
+}
+
+span.mySliderTitles{
+    padding-left: 10px;
+}
+
+.mySlider{
+    height: 20px;
+    width: 120px;
+    vertical-align: center;
+}
+
+.mySliderTextValues{
+    width: 56px;
+    font-size: 10px;
+    height: 20px;
+}
+
+.mySliderBox{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.mySliderValueLeftBox{
+    margin-right: 10px;
+    left: 0;
+}
+.mySliderValueRightBox{
+    margin-left: 10px;
+    right: 0;
+}

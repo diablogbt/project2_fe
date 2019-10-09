@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../store/actions/Index'
 import { updateObject } from '../../store/utility';
-
+import './Auth.css';
+import {InputText} from 'primereact/inputtext';
+import {Button} from 'primereact/button';
 
 class Auth extends Component{
 
@@ -13,7 +15,9 @@ class Auth extends Component{
                 type: 'input',
                 config: {
                     type: 'text',
-                    placeholder: 'User Name'
+                    placeholder: 'User Name',
+                    icon: 'pi pi-user',
+                    class: 'inputArea'
                 },
                 value: '',
                 validation: {
@@ -26,7 +30,9 @@ class Auth extends Component{
                 type: 'input',
                 config: {
                     type: 'password',
-                    placeholder: 'Password'
+                    placeholder: 'Password',
+                    icon: 'pi pi-lock',
+                    class: 'inputArea'
                 },
                 value: '',
                 validation: {
@@ -40,7 +46,9 @@ class Auth extends Component{
                 type: 'input',
                 config: {
                     type: 'email',
-                    placeholder: 'Email: xxx@xxx.com'
+                    placeholder: 'Email: xxx@xxx.com',
+                    // icon: 'glyphicon glyphicon-envelope'
+                    icon: 'pi pi-envelope'
                 },
                 value: '',
                 validation: {
@@ -68,20 +76,27 @@ class Auth extends Component{
         const formElementsArray=[];
         for(let key of this.state.authmodeinputs[this.state.authmode]){
             formElementsArray.push({
-                id:key,
+                key:key,
                 property: this.state.controls[key]
             });
         }
 
         let form = formElementsArray.map(element => (
-            <input 
-                key={element.id}
-                type={element.property.config.type}
-                value={element.property.value}
-                placeholder={element.property.config.placeholder}
-                onChange={(event)=>this.inputChangeHandler(event,element.id)}
-                required={element.property.validation.required}
-            />
+            <div className="input-group inputDiv" key={element.key}>
+                <InputText
+                    key={element.key}
+                    type={element.property.config.type}
+                    value={element.property.value}
+                    placeholder={element.property.config.placeholder}
+                    onChange={(event)=>this.inputChangeHandler(event,element.key)}
+                    required={element.property.validation.required}
+                    className={element.property.config.class}
+                />
+                {/* <span className="input-group-addon">
+                    <i className={element.property.config.icon+" Inputicon"}></i>
+                </span>  */}
+                <i className={element.property.config.icon+" Inputicon"}></i>
+            </div>
         ));
 
         let note='';
@@ -90,7 +105,10 @@ class Auth extends Component{
                 note = 'please input name and pass';
                 break;
             case 'process':
-                note = 'verifying...';
+                note = (<div>
+                    <i className="pi pi-spin pi-spinner"></i>
+                    <span>verifying...</span> 
+                </div> );
             default:
                 break;
         }
@@ -98,17 +116,17 @@ class Auth extends Component{
             note = 'wrong username or password, please input again..';
 
         return (
-            <div>
-                <p>{note}</p>
-                <p>{this.state.notemode}</p>
-                <p></p>
-                <form onSubmit={this.loginHandler}>
-                    <div>{form}</div>
-                    <div>
-                        <button type="submit">{this.state.authmode}</button>
-                        <button onClick= {this.authModeChangeHandler}>to {this.state.authmode === 'login'?'signup':'login'}</button>
-                    </div>
-                </form>
+            <div className="Auth">
+                <div style={{color: 'lightslategray'}}>
+                    {note}
+                    {this.state.notemode}
+                </div>
+                <div className="form">{form}</div>
+                <div className="ButtonArea">    
+                    <Button label={this.state.authmode} onClick={this.loginHandler} className="p-button-raised p-button-rounded"/>
+                    <p></p>
+                    <Button label={'to '+this.state.authmode} onClick={this.authModeChangeHandler} />
+                </div>
             </div>
         );
     }
